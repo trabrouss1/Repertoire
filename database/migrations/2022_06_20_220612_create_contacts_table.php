@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Personne;
+use App\Models\TypeContact;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,15 +15,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('sexe');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('contact');
+            $table->foreignIdFor(TypeContact::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Personne::class)->constrained()->cascadeOnDelete();
 
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
@@ -35,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('contacts');
     }
 };
