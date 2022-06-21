@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/admin_dashbaord-_hotel_bootstrap5
 .env
 .env.backup
 .phpunit.result.cache

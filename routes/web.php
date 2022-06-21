@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// La route d'entree
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware(['auth'])->group(static function() {
+    Route::get('/dashboard', function () { return view('base'); })->name('dashboard');
+    Route::match(['get', 'post'],'/ajouter-contact', [ContactController::class, "ajouterContact"])->name('ajouterContact');
+});
 
+
+Route::middleware(['auth'])->group(static function (){
+    Route::prefix('admin')->group(static function (){
+        Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
+        Route::match(['get', 'post'],'/', [AdminController::class, "index"])->name('admin');
+    });
+});
 require __DIR__.'/auth.php';
