@@ -22,15 +22,31 @@
     <div class="main-wrapper">
         <div class="page-wrapper">
             <div class="content container-fluid">
-                <div class="page-header">
-                    <div class="row">
-                        <div class="col-sm-12 mt-5">
-                            <h3 class="page-title mt-3">Good Morning</h3>
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item active">Dashboard</li>
-                            </ul>
+                @yield('pageHeader')
+                <div class="card-body">
+
+                    {{-- @if ($errors->any())
+                        @dump($errors->any())
+                        @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger" role="alert">
+                                {{ $error }}
+                            </div>
+                        @endforeach
+                    @endif --}}
+
+                    @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            {!! $message !!}
                         </div>
-                    </div>
+                    @endif
+
+                    @if ($message = Session::get('danger'))
+                        <div class="alert alert-danger alert-block">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            {!! $message !!}
+                        </div>
+                    @endif
                 </div>
                 @yield('contenu')
             </div>
@@ -39,5 +55,4 @@
 
     @include('partials/_footer')
 </body>
-
 </html>

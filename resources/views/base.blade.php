@@ -1,5 +1,18 @@
 @extends('dashboard')
 
+@section('pageHeader')
+    <div class="page-header">
+        <div class="row">
+            <div class="col-sm-12 mt-5">
+                <h3 class="page-title mt-3">Good Morning</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+@endsection
+
 @section('contenu')
 <div class="row">
     <div class="col-xl-3 col-sm-6 col-12">
@@ -87,4 +100,14 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('sidebar')
+    <li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Utilisateur </span> <span class="menu-arrow"></span></a>
+        <ul class="submenu_class" style="display: none;">
+            <li><a href="{{ route('listUser') }}">Tous le utilisateurs </a></li>
+            <li><a href="edit-staff.html"> Edit Staff </a></li>
+            <li><a href="add-staff.html"> Add Staff </a></li>
+        </ul>
+    </li>
 @endsection

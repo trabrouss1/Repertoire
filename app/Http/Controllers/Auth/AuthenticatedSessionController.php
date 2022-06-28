@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -31,6 +32,15 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        // Apres connexion si l'utilisateur n'est pas admin il sera envoyer vers la page signifier en bas
+        if(!Gate::allows('access-admin')){
+            return to_route('ajouterContact');
+        }
+
+        if(Auth()->user()->isAdmin == 1){
+            return to_route('admin');
+        }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

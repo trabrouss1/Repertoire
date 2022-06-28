@@ -8,3 +8,4 @@
 <script src="{{ asset('plugins/morris/morris.min.js') }}"></script>
 <script src="{{ asset('js/chart.morris.js') }}"></script>
 <script src="{{ asset('js/script.j') }}s"></script>
+@yield('scripts')

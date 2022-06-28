@@ -21,15 +21,18 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(static function() {
-    Route::get('/dashboard', function () { return view('base'); })->name('dashboard');
+    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
     Route::match(['get', 'post'],'/ajouter-contact', [ContactController::class, "ajouterContact"])->name('ajouterContact');
 });
 
 
-Route::middleware(['auth'])->group(static function (){
+Route::middleware(['auth', 'admin'])->group(static function (){
     Route::prefix('admin')->group(static function (){
-        Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
-        Route::match(['get', 'post'],'/', [AdminController::class, "index"])->name('admin');
+        Route::get('/accueil-admin', function () { return view('base'); })->name('admin');
+        Route::match(['get', 'post'],'/list-user', [AdminController::class, "listUser"])->name('listUser');
+        Route::match(['get', 'post'],'/add-user', [AdminController::class, "addUser"])->name('addUser');
+        Route::match(['get', 'post'],'/edit-user/{user}', [AdminController::class, "editUser"])->name('editUser');
+        // Route::match(['get', 'post'],'/delete-user/{user}', [AdminController::class, "deleteUser"])->name('deleteUser');
     });
 });
 require __DIR__.'/auth.php';
